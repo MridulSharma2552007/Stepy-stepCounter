@@ -17,7 +17,7 @@ class _PageviewpagesState extends State<Pageviewpages> {
     return Scaffold(body: PageView(controller: _pageController,
     children: [
       Pageone(controller: _pageController),
-      Pagetwo()
+      Pagetwo(controller: _pageController,)
     ],
     ));
   }

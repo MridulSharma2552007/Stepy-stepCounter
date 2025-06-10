@@ -36,7 +36,7 @@ class _PageoneState extends State<Pageone> {
 
   @override
   void dispose() {
-    _controller.dispose(); // clean up
+    _controller.dispose();
     super.dispose();
   }
 
