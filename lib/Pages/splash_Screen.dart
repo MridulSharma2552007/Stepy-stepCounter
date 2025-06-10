@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stepy/Colors/app_colors.dart';
 import 'package:stepy/Pages/home.dart';
+import 'package:stepy/Pages/pageviewpages.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -22,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Home()),
+        MaterialPageRoute(builder: (context) => Pageviewpages()),
       );
     });
   }
@@ -35,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: AnimatedOpacity(
           opacity: OpacityLevel,
           duration: Duration(seconds: 2),
-          child: Image.asset('assets/Images/appicon.png'),
+          child: Image.asset('assets/Images/stepyIcon.png'),
         ),
       ),
     );
