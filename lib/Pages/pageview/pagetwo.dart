@@ -125,7 +125,7 @@ class _PagetwoState extends State<Pagetwo> {
                                         context,
                                       ).showSnackBar(
                                         const SnackBar(
-                                          // Use const for SnackBar if content is const
+                                         
                                           content: Text(
                                             'Please Your Age',
                                             style: TextStyle(
@@ -133,10 +133,10 @@ class _PagetwoState extends State<Pagetwo> {
                                             ),
                                           ),
                                           backgroundColor:
-                                              Colors.black, // Make it stand out
+                                              Colors.black, 
                                           duration: Duration(
                                             seconds: 2,
-                                          ), // How long it shows
+                                          ),
                                         ),
                                       );
                                     } else {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stepy/Pages/pageview/pagetwo.dart';
 import 'package:video_player/video_player.dart';
 
 class Pageone extends StatefulWidget {
