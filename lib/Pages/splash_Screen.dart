@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:stepy/Colors/app_colors.dart';
-import 'package:stepy/Pages/home.dart';
 import 'package:stepy/Pages/pageviewpages.dart';
 
 class SplashScreen extends StatefulWidget {

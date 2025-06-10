@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stepy/Pages/pageone.dart';
+import 'package:stepy/Pages/pageview/pageone.dart';
+import 'package:stepy/Pages/pageview/pagetwo.dart';
 
 class Pageviewpages extends StatefulWidget {
   const Pageviewpages({super.key});
@@ -15,7 +16,8 @@ class _PageviewpagesState extends State<Pageviewpages> {
   Widget build(BuildContext context) {
     return Scaffold(body: PageView(controller: _pageController,
     children: [
-      Pageone()
+      Pageone(controller: _pageController),
+      Pagetwo()
     ],
     ));
   }

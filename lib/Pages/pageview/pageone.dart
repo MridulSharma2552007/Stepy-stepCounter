@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:stepy/Pages/pageview/pagetwo.dart';
 import 'package:video_player/video_player.dart';
 
 class Pageone extends StatefulWidget {
-  const Pageone({super.key});
-
+  final PageController controller;
+  const Pageone({super.key, required this.controller});
   @override
   State<Pageone> createState() => _PageoneState();
 }
@@ -11,7 +12,7 @@ class Pageone extends StatefulWidget {
 class _PageoneState extends State<Pageone> {
   late VideoPlayerController _controller;
   bool _isInitialized = false;
-  TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController _textEditingController = TextEditingController();
   String Name = '';
 
   @override
@@ -113,12 +114,41 @@ class _PageoneState extends State<Pageone> {
                                   5,
                                 ),
                                 child: TextField(
+                                  showCursor: false,
                                   controller: _textEditingController,
                                   onSubmitted: (value) {
-                                    setState(() {
-                                      Name = value;
-                                    });
+                                    if (_textEditingController.text.isEmpty) {
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        const SnackBar(
+                                          // Use const for SnackBar if content is const
+                                          content: Text(
+                                            'Please enter your name',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          backgroundColor:
+                                              Colors.black, // Make it stand out
+                                          duration: Duration(
+                                            seconds: 2,
+                                          ), // How long it shows
+                                        ),
+                                      );
+                                    } else {
+                                      setState(() {
+                                        Name = value;
+                                      });
+                                      widget.controller.animateToPage(
+                                        1, //Index
+
+                                        duration: Duration(milliseconds: 500),
+                                        curve: Curves.easeInOut,
+                                      );
+                                    }
                                   },
+
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: 'Plank',
