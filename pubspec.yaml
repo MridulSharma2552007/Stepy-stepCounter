@@ -36,6 +36,9 @@ dependencies:
   cupertino_icons: ^1.0.8
   pedometer: ^4.1.1
   video_player: ^2.8.1
+  permission_handler: ^11.3.0
+  shared_preferences: ^2.5.3
+
   
 
 dev_dependencies:

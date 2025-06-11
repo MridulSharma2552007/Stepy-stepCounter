@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stepy/Pages/home.dart';
 import 'package:video_player/video_player.dart';
 
@@ -13,9 +14,14 @@ class Pagethree extends StatefulWidget {
 class _PagethreeState extends State<Pagethree> {
   bool initialize = false;
   late VideoPlayerController _controller;
-  TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController _textEditingController = TextEditingController();
   String? selectedGender = 'Male';
   String goalSteps = '';
+  Future<void> completeOnBoard() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('onboardingComplete', true);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -30,6 +36,7 @@ class _PagethreeState extends State<Pagethree> {
   Future<void> initializePlayer() async {
     _controller.initialize();
     setState(() {
+      completeOnBoard();
       initialize = true;
     });
     _controller.play();
@@ -231,10 +238,23 @@ class _PagethreeState extends State<Pagethree> {
                     right: 10,
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => Home()),
-                        );
+                        if (_textEditingController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Please Your Daily GGoal',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              backgroundColor: Colors.black,
+                              duration: Duration(seconds: 2),
+                            ),
+                          );
+                        } else {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => Home()),
+                          );
+                        }
                       },
                       child: Container(
                         height: 70,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stepy/Colors/app_colors.dart';
+import 'package:stepy/Pages/home.dart';
 import 'package:stepy/Pages/pageviewpages.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,12 +21,23 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     });
     super.initState();
-    Future.delayed(Duration(seconds: 3), () {
+    checkOnboardingStatus();
+  }
+
+  Future<void> checkOnboardingStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    final isCompleted = prefs.getBool('onboardingComplete') ?? false;
+    if (isCompleted) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Pageviewpages()),
+        MaterialPageRoute(builder: (context) => const Home()),
       );
-    });
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const Pageviewpages()),
+      );
+    }
   }
 
   @override
