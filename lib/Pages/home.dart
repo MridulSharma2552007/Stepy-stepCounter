@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pedometer/pedometer.dart';
+import 'package:stepy/elements/stepcountercontainer.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -44,20 +45,39 @@ class _HomeState extends State<Home> {
     print("ERROR : $e");
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Stack(
-        fit: StackFit.expand,
-        children: [Image.asset('assets/Images/background.jpg'), Column(
-          children: [
-            
-          ],
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: Colors.black,
+    body: Stack(
+      fit: StackFit.expand,
+      children: [
+        // Fixed background image
+        Image.asset(
+          'assets/Images/background.jpg',
+          fit: BoxFit.cover,
+        ),
 
+        // Scrollable content over the background
+        SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+            child: Column(
+              children: [
+                Stepcountercontainer(steps: _steps),
+                Stepcountercontainer(steps: _steps),
+                Stepcountercontainer(steps: _steps),
+                Stepcountercontainer(steps: _steps),
+                Stepcountercontainer(steps: _steps),
+                Stepcountercontainer(steps: _steps),
+                Stepcountercontainer(steps: _steps),
+              ],
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
 
-        )],
-      ),
-    );
-  }
 }
