@@ -11,34 +11,37 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late Stream<StepCount> _stepCounterStream;
   int _steps = 0;
+  int? _startedSteps;
+  bool _isTracking = false;
   @override
   void initState() {
     super.initState();
-    initpedometer();
+    initializeCounter();
   }
 
-  String getTodayDate() {
-    DateTime now = DateTime.now();
-    return ('${now.year}-${now.month}-${now.day}');
-  }
-
-  Future<void> initpedometer() async {
+  Future<void> initializeCounter() async {
     _stepCounterStream = Pedometer.stepCountStream;
     _stepCounterStream.listen(
-      onStepCount,
-      onError: onStepCounterError,
+      onStepCounter,
+      onError: onErrorStepCounter,
       cancelOnError: true,
     );
   }
 
-  void onStepCount(StepCount event) {
-    setState(() {
-      _steps = event.steps;
-    });
+  void onStepCounter(StepCount event) {
+    if (_isTracking) {
+      if (_startedSteps == null) {
+        _startedSteps = event.steps;
+      }
+      int runSteps = event.steps - _startedSteps!;
+      setState(() {
+        _steps = runSteps;
+      });
+    }
   }
 
-  void onStepCounterError(error) {
-    print('Error $error');
+  void onErrorStepCounter(e) {
+    print("ERROR : $e");
   }
 
   @override
@@ -47,10 +50,13 @@ class _HomeState extends State<Home> {
       backgroundColor: Colors.black,
       body: Stack(
         fit: StackFit.expand,
-        children: [
-          Image.asset('assets/Images/background.jpg'),
-          Center(child: Text("$_steps", style: TextStyle(color: Colors.white))),
-        ],
+        children: [Image.asset('assets/Images/background.jpg'), Column(
+          children: [
+            
+          ],
+
+
+        )],
       ),
     );
   }
