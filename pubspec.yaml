@@ -85,9 +85,9 @@ flutter:
         - asset: assets/fonts/PLANK___.TTF
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
+    - family: Pilowlava
+      fonts:
+        - asset: assets/fonts/Stora.otf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

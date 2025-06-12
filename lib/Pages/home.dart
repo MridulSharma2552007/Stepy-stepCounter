@@ -31,9 +31,7 @@ class _HomeState extends State<Home> {
 
   void onStepCounter(StepCount event) {
     if (_isTracking) {
-      if (_startedSteps == null) {
-        _startedSteps = event.steps;
-      }
+      _startedSteps ??= event.steps;
       int runSteps = event.steps - _startedSteps!;
       setState(() {
         _steps = runSteps;
@@ -45,39 +43,47 @@ class _HomeState extends State<Home> {
     print("ERROR : $e");
   }
 
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    backgroundColor: Colors.black,
-    body: Stack(
-      fit: StackFit.expand,
-      children: [
-        // Fixed background image
-        Image.asset(
-          'assets/Images/background.jpg',
-          fit: BoxFit.cover,
-        ),
+  void onStopTrancking() {
+    setState(() {
+      _isTracking = false;
+    });
+  }
 
-        // Scrollable content over the background
-        SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-            child: Column(
-              children: [
-                Stepcountercontainer(steps: _steps),
-                Stepcountercontainer(steps: _steps),
-                Stepcountercontainer(steps: _steps),
-                Stepcountercontainer(steps: _steps),
-                Stepcountercontainer(steps: _steps),
-                Stepcountercontainer(steps: _steps),
-                Stepcountercontainer(steps: _steps),
-              ],
+  void onStartTracking() {
+    setState(() {
+      _isTracking = true;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset('assets/Images/background.jpg', fit: BoxFit.cover),
+
+          SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+              child: Column(
+                children: [
+                  Stepcountercontainer(
+                    steps: _steps,
+                    onStart: () {
+                      onStartTracking();
+                    },
+                    onStop: () {
+                      onStopTrancking();
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
-    ),
-  );
-}
-
+        ],
+      ),
+    );
+  }
 }
