@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:stepy/elements/userdata.dart';
 import 'package:video_player/video_player.dart';
 
 class Pageone extends StatefulWidget {
   final PageController controller;
+
   const Pageone({super.key, required this.controller});
   @override
   State<Pageone> createState() => _PageoneState();
@@ -121,18 +123,14 @@ class _PageoneState extends State<Pageone> {
                                         context,
                                       ).showSnackBar(
                                         const SnackBar(
-                                          // Use const for SnackBar if content is const
                                           content: Text(
                                             'Please enter your name',
                                             style: TextStyle(
                                               color: Colors.white,
                                             ),
                                           ),
-                                          backgroundColor:
-                                              Colors.black, // Make it stand out
-                                          duration: Duration(
-                                            seconds: 2,
-                                          ), // How long it shows
+                                          backgroundColor: Colors.black,
+                                          duration: Duration(seconds: 2),
                                         ),
                                       );
                                     } else {
@@ -140,7 +138,7 @@ class _PageoneState extends State<Pageone> {
                                         Name = value;
                                       });
                                       widget.controller.animateToPage(
-                                        1, //Index
+                                        1,
 
                                         duration: Duration(milliseconds: 500),
                                         curve: Curves.easeInOut,

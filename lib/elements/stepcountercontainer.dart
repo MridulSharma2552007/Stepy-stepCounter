@@ -67,7 +67,7 @@ class _StepcountercontainerState extends State<Stepcountercontainer> {
                     setState(() {
                       clicked = true;
                     });
-                      widget.onStop();
+                    widget.onStop();
                   },
                   child: InfoBox(
                     text: 'Stop',
@@ -82,7 +82,7 @@ class _StepcountercontainerState extends State<Stepcountercontainer> {
                     setState(() {
                       clicked = false;
                     });
-                      widget.onStart();
+                    widget.onStart();
                   },
                   child: InfoBox(
                     text: 'Start',

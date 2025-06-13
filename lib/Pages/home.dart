@@ -78,6 +78,7 @@ class _HomeState extends State<Home> {
                       onStopTrancking();
                     },
                   ),
+                  Container(),
                 ],
               ),
             ),
