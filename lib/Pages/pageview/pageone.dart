@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stepy/elements/userdata.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 
 class Pageone extends StatefulWidget {
@@ -117,7 +117,7 @@ class _PageoneState extends State<Pageone> {
                                 child: TextField(
                                   showCursor: false,
                                   controller: _textEditingController,
-                                  onSubmitted: (value) {
+                                  onSubmitted: (value) async {
                                     if (_textEditingController.text.isEmpty) {
                                       ScaffoldMessenger.of(
                                         context,
@@ -137,6 +137,13 @@ class _PageoneState extends State<Pageone> {
                                       setState(() {
                                         Name = value;
                                       });
+                                      SharedPreferences prefs =
+                                          await SharedPreferences.getInstance();
+                                      await prefs.setString('userName', value);
+                                      await Future.delayed(
+                                        Duration(seconds: 3),
+                                      );
+
                                       widget.controller.animateToPage(
                                         1,
 

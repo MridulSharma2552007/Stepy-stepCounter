@@ -3,7 +3,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:stepy/Pages/pageview/pageone.dart';
 import 'package:stepy/Pages/pageview/pagethree.dart';
 import 'package:stepy/Pages/pageview/pagetwo.dart';
-import 'package:stepy/elements/userdata.dart';
 
 class Pageviewpages extends StatefulWidget {
   const Pageviewpages({super.key});
@@ -34,9 +33,7 @@ class _PageviewpagesState extends State<Pageviewpages> {
       body: PageView(
         controller: _pageController,
         children: [
-          Pageone(controller: _pageController
-        
-          ),
+          Pageone(controller: _pageController),
           Pagetwo(controller: _pageController),
           Pagethree(),
         ],

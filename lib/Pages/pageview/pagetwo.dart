@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 
 class Pagetwo extends StatefulWidget {
@@ -15,6 +16,8 @@ class _PagetwoState extends State<Pagetwo> {
   late VideoPlayerController controller;
   final TextEditingController _textEditingController = TextEditingController();
   String age = '';
+  String usrrName = '';
+  String savedName = '';
   @override
   void initState() {
     super.initState();
@@ -22,6 +25,19 @@ class _PagetwoState extends State<Pagetwo> {
     controller.setLooping(true);
     controller.setVolume(0);
     _initilizeVideoPlayer();
+    Future.delayed(Duration(seconds: 0), () {
+      loadname();
+    });
+  }
+
+  void loadname() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    savedName = prefs.getString('userName') ?? '';
+    print("Saved name: $savedName");
+
+    setState(() {
+      usrrName = savedName;
+    });
   }
 
   Future<void> _initilizeVideoPlayer() async {
@@ -119,32 +135,33 @@ class _PagetwoState extends State<Pagetwo> {
                                   ],
                                   showCursor: false,
                                   controller: _textEditingController,
-                                  onSubmitted: (value) {
+                                  onSubmitted: (value) async {
                                     if (_textEditingController.text.isEmpty) {
                                       ScaffoldMessenger.of(
                                         context,
                                       ).showSnackBar(
-                                        const SnackBar(
-                                         
+                                        SnackBar(
                                           content: Text(
-                                            'Please Your Age',
+                                            'Please Enter Your Age $usrrName',
                                             style: TextStyle(
                                               color: Colors.white,
                                             ),
                                           ),
-                                          backgroundColor:
-                                              Colors.black, 
-                                          duration: Duration(
-                                            seconds: 2,
-                                          ),
+                                          backgroundColor: Colors.black,
+                                          duration: Duration(seconds: 2),
                                         ),
                                       );
                                     } else {
                                       setState(() {
                                         age = value;
                                       });
+                                      SharedPreferences prefs =
+                                          await SharedPreferences.getInstance();
+                                      await prefs.setString('userAge', value);
+                                      Future.delayed(Duration(seconds: 3));
+
                                       widget.controller.animateToPage(
-                                        2, //Index
+                                        2,
 
                                         duration: Duration(milliseconds: 500),
                                         curve: Curves.easeInOut,

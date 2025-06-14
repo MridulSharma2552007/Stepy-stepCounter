@@ -17,10 +17,6 @@ class _PagethreeState extends State<Pagethree> {
   final TextEditingController _textEditingController = TextEditingController();
   String? selectedGender = 'Male';
   String goalSteps = '';
-  Future<void> completeOnBoard() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('onboardingComplete', true);
-  }
 
   @override
   void initState() {
@@ -36,7 +32,6 @@ class _PagethreeState extends State<Pagethree> {
   Future<void> initializePlayer() async {
     _controller.initialize();
     setState(() {
-      completeOnBoard();
       initialize = true;
     });
     _controller.play();
@@ -115,7 +110,7 @@ class _PagethreeState extends State<Pagethree> {
                                                 .digitsOnly,
                                           ],
                                           controller: _textEditingController,
-                                          onSubmitted: (value) {
+                                          onSubmitted: (value) async {
                                             if (_textEditingController
                                                 .text
                                                 .isEmpty) {
@@ -139,6 +134,12 @@ class _PagethreeState extends State<Pagethree> {
                                               setState(() {
                                                 goalSteps = value;
                                               });
+                                              SharedPreferences prefs =
+                                                  await SharedPreferences.getInstance();
+                                              await prefs.setString(
+                                                "usrrGoal",
+                                                value,
+                                              );
                                             }
                                           },
                                           style: TextStyle(
@@ -208,10 +209,16 @@ class _PagethreeState extends State<Pagethree> {
                                                   ),
                                                   value: option,
                                                   groupValue: selectedGender,
-                                                  onChanged: (val) {
+                                                  onChanged: (val) async {
                                                     setState(() {
                                                       selectedGender = val;
                                                     });
+                                                    SharedPreferences prefs =
+                                                        await SharedPreferences.getInstance();
+                                                    prefs.setString(
+                                                      "usrrGender",
+                                                      val!,
+                                                    );
                                                   },
                                                   activeColor: Colors.white,
                                                 ),
@@ -225,7 +232,7 @@ class _PagethreeState extends State<Pagethree> {
                             ),
                           ),
 
-                          SizedBox(height: 120), // Leave space for button
+                          SizedBox(height: 120),
                         ],
                       ),
                     ),
@@ -237,12 +244,12 @@ class _PagethreeState extends State<Pagethree> {
                     left: 10,
                     right: 10,
                     child: GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         if (_textEditingController.text.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text(
-                                'Please Your Daily GGoal',
+                                'Please  Enter Your Daily Goal',
                                 style: TextStyle(color: Colors.white),
                               ),
                               backgroundColor: Colors.black,
@@ -250,6 +257,8 @@ class _PagethreeState extends State<Pagethree> {
                             ),
                           );
                         } else {
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.setBool('onboardingComplete', true);
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(builder: (context) => Home()),
