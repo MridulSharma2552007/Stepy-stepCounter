@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Distance extends StatefulWidget {
   final int distanceSteps;
+
   const Distance({super.key, required this.distanceSteps});
 
   @override
@@ -10,32 +11,28 @@ class Distance extends StatefulWidget {
 }
 
 class _DistanceState extends State<Distance> {
-  String gender = '';
-  double distanceInKm = 0;
+  String gender = 'Male'; // default gender
 
   @override
   void initState() {
     super.initState();
-    loadDistance();
+    loadGender();
   }
 
-  Future<void> loadDistance() async {
+  Future<void> loadGender() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    gender = prefs.getString('usrrGender') ?? 'Male'; // fallback to 'Male'
+    String storedGender = prefs.getString('usrrGender') ?? 'Male';
     setState(() {
-      distanceInKm = calcDistance();
+      gender = storedGender;
     });
-  }
-
-  double calcDistance() {
-    const double maleStride = 0.78;
-    const double femaleStride = 0.70;
-    double stride = gender == 'Female' ? femaleStride : maleStride;
-    return (widget.distanceSteps * stride) / 1000; // Convert to KM
   }
 
   @override
   Widget build(BuildContext context) {
+    // Use stride length based on gender
+    double stride = gender == 'Female' ? 0.70 : 0.78;
+    double currentDistance = (widget.distanceSteps * stride) / 1000; // in km
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 40, 10, 10),
       child: Container(
@@ -48,8 +45,8 @@ class _DistanceState extends State<Distance> {
         ),
         child: Center(
           child: Text(
-            '${distanceInKm.toStringAsFixed(2)} km',
-            style: TextStyle(
+            '${currentDistance.toStringAsFixed(2)} km',
+            style: const TextStyle(
               fontSize: 30,
               color: Colors.white,
               fontWeight: FontWeight.bold,
