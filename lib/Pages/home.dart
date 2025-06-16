@@ -122,7 +122,7 @@ class _HomeState extends State<Home> {
                             onStart: onStartTracking,
                             onStop: onStopTracking,
                           ),
-                          Distance(),
+                          Distance(distanceSteps: _steps),
                         ],
                       ),
                     ),
